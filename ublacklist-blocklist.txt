@@ -4,8 +4,10 @@
 /ensonhaber.com/
 /fanatik.com.tr/
 /fotomac.com.tr/
+/haber7.com/
 /haberler.com/
 /haberturk.com/
+/hepsiemlak.com/
 /hurriyet.com.tr/
 /milliyet.com.tr/
 /posta.com.tr/
