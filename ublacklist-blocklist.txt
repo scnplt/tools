@@ -1,1 +1,15 @@
+/ahaber.com.tr/
+/aksam.com.tr/
+/cumhuriyet.com.tr/
+/ensonhaber.com/
+/fanatik.com.tr/
+/fotomac.com.tr/
+/haberler.com/
+/haberturk.com/
+/hurriyet.com.tr/
 /milliyet.com.tr/
+/posta.com.tr/
+/sabah.com.tr/
+/sozcu.com.tr/
+/takvim.com.tr/
+/yenisafak.com/
