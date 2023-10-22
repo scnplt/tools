@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: always
+    networks:
+      - cloudflared
+    env_file: pve-base.env
+    command: tunnel --no-autoupdate run
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    networks:
+      - cloudflared # cloudflare tunnel | https://portainer:9443
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer_data:/data"
+    depends_on:
+      cloudflared:
+        condition: service_started
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - cloudflared # cloudflare tunnel | http://uptime-kuma:9443
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "uptime-kuma:/app/data"
+    depends_on:
+      cloudflared:
+        condition: service_started
+
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+      - "3000:3000/tcp"
+    volumes:
+      - "adguardhome_work:/opt/adguardhome/work"
+      - "adguardhome_conf:/opt/adguardhome/conf"
+
+networks:
+  cloudflared:
+
+volumes:
+  portainer_data:
+  uptime-kuma:
+  adguardhome_conf:
+  adguardhome_work:
