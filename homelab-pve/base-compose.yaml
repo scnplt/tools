@@ -1,7 +1,15 @@
 version: '3.8'
 
-services:
+networks:
+  cloudflared:
 
+volumes:
+  portainer_data:
+  uptime-kuma:
+  adguardhome_conf:
+  adguardhome_work:
+
+services:
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
@@ -18,8 +26,8 @@ services:
     networks:
       - cloudflared # cloudflare tunnel | https://portainer:9443
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "portainer_data:/data"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
     depends_on:
       cloudflared:
         condition: service_started
@@ -31,8 +39,8 @@ services:
     networks:
       - cloudflared # cloudflare tunnel | http://uptime-kuma:9443
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "uptime-kuma:/app/data"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - uptime-kuma:/app/data
     depends_on:
       cloudflared:
         condition: service_started
@@ -44,19 +52,10 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "80:80/tcp"
+      - "8080:80/tcp"
       - "443:443/tcp"
       - "443:443/udp"
       - "3000:3000/tcp"
     volumes:
-      - "adguardhome_work:/opt/adguardhome/work"
-      - "adguardhome_conf:/opt/adguardhome/conf"
-
-networks:
-  cloudflared:
-
-volumes:
-  portainer_data:
-  uptime-kuma:
-  adguardhome_conf:
-  adguardhome_work:
+      - adguardhome_work:/opt/adguardhome/work
+      - adguardhome_conf:/opt/adguardhome/conf
