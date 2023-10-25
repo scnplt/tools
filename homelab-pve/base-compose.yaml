@@ -37,7 +37,7 @@ services:
     container_name: uptime-kuma
     restart: unless-stopped
     networks:
-      - cloudflared # cloudflare tunnel | http://uptime-kuma:9443
+      - cloudflared # cloudflare tunnel | http://uptime-kuma:3001
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - uptime-kuma:/app/data
