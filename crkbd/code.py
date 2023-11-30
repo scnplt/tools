@@ -7,7 +7,7 @@ keyboard = KMKKeyboard()
 
 keyboard.modules.append(
     StringSubstitution(dictionary = {
-        ':sc': 'Sertan Canpolat'
+        ';sc': 'Sertan Canpolat'
     })
 )
 
@@ -17,7 +17,6 @@ XXXXXXX = KC.NO
 NUMNAV = KC.MO(1)
 SYMBL = KC.MO(2)
 FN = KC.MO(3)
-MOUSE_TG = KC.TG(4)
 
 TAB_LSFT = KC.HT(KC.TAB, KC.LSFT)
 QUOT_RSFT = KC.HT(KC.QUOT, KC.RSFT)
@@ -28,14 +27,14 @@ RCRD = KC.RECORD_SEQUENCE()
 STP = KC.STOP_SEQUENCE()
 PLY = KC.PLAY_SEQUENCE()
 
-keyboard.combos.combos = [
+keyboard.set_combos([
     Chord((KC.ESC, KC.Q), KC.CAPS),
     Chord((KC.Y, KC.U), KC.LCTRL(KC.Z)),
     Chord((KC.U, KC.I), KC.LCTRL(KC.Y)),
     Chord((KC.F, KC.G), KC.LGUI),
     Chord((KC.H, KC.J), KC.RGUI),
     Chord((KC.F, KC.V), KC.LGUI(KC.V)),
-]
+])
 
 keyboard.keymap = [
     # BASE
@@ -64,19 +63,11 @@ keyboard.keymap = [
 
     # FN
     [
-        XXXXXXX,    KC.F1,      KC.F2,      KC.F3,      KC.F4,      KC.F5,              KC.F6,      KC.F7,      KC.F8,      KC.F9,      KC.F10,     MOUSE_TG,
+        XXXXXXX,    KC.F1,      KC.F2,      KC.F3,      KC.F4,      KC.F5,              KC.F6,      KC.F7,      KC.F8,      KC.F9,      KC.F10,     XXXXXXX,
         XXXXXXX,    KC.F11,     KC.F12,     XXXXXXX,    XXXXXXX,    XXXXXXX,            KC.MPRV,    KC.VOLD,    KC.VOLU,    KC.MNXT,    XXXXXXX,    XXXXXXX,
         _______,    KC.RESET,   KC.DEBUG,   RCRD,       STP,        PLY,                KC.MPLY,    KC.MUTE,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                                             _______,    XXXXXXX,    XXXXXXX,            KC.PSCR,    KC.INS,     _______
-    ],
-
-    # MOUSE
-    [
-        XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,            KC.MW_UP,   KC.MB_BTN4, KC.MS_UP,   KC.MB_BTN5, XXXXXXX,    MOUSE_TG,
-        XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,            KC.MW_DN,   KC.MS_LT,   KC.MS_DN,   KC.MS_RT,   XXXXXXX,    XXXXXXX,
-        XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
-                                            XXXXXXX,    XXXXXXX,    XXXXXXX,            KC.MB_LMB,  KC.MB_MMB,  KC.MB_RMB
-    ], 
+    ]
 ]
 
 if __name__ == '__main__':
