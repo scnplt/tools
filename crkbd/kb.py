@@ -8,7 +8,6 @@ from kmk.modules.holdtap import HoldTap
 from kmk.modules.combos import Combos
 from kmk.modules.tapdance import TapDance
 from kmk.modules.dynamic_sequences import DynamicSequences
-from kmk.modules.mouse_keys import MouseKeys
 from kmk.extensions.media_keys import MediaKeys
 
 class KMKKeyboard(_KMKKeyboard):
@@ -19,13 +18,12 @@ class KMKKeyboard(_KMKKeyboard):
     layers = Layers()
     hold_tap = HoldTap()
     combos = Combos()
-    mouse_keys = MouseKeys()
     tapdance = TapDance()
-    tapdance.tap_time = 750
+    tapdance.tap_time = 180
     dynamic_sequences = DynamicSequences(timeout=10000)
     split = Split(split_type=SplitType.UART, data_pin=board.GP0, data_pin2=board.GP1, use_pio=True, uart_flip=True)
 
-    modules = [layers, hold_tap, split, combos, tapdance, dynamic_sequences, mouse_keys]
+    modules = [layers, hold_tap, split, combos, tapdance, dynamic_sequences]
     extensions = [MediaKeys()]
 
     coord_mapping = [
@@ -34,3 +32,6 @@ class KMKKeyboard(_KMKKeyboard):
         12, 13, 14, 15, 16, 17,     41, 40, 39, 38, 37, 36,
                     21, 22, 23,     47, 46, 45,
     ]
+
+    def set_combos(self, combos):
+        self.combos.combos = combos
