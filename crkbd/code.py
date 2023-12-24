@@ -30,7 +30,7 @@ PLY = KC.PLAY_SEQUENCE()
 keyboard.set_combos([
     Chord((KC.ESC, KC.Q), KC.CAPS),
     Chord((KC.Y, KC.U), KC.LCTRL(KC.Z)),
-    Chord((KC.U, KC.I), KC.LCTRL(KC.Y)),
+    Chord((KC.U, KC.I), KC.LCTRL(KC.LSFT(KC.Z))),
     Chord((KC.F, KC.G), KC.LGUI),
     Chord((KC.H, KC.J), KC.RGUI),
     Chord((KC.F, KC.V), KC.LGUI(KC.V)),
