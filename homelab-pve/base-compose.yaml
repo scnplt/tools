@@ -44,18 +44,3 @@ services:
     depends_on:
       cloudflared:
         condition: service_started
-
-  adguardhome:
-    image: adguard/adguardhome:latest
-    container_name: adguardhome
-    restart: unless-stopped
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8080:80/tcp"
-      - "443:443/tcp"
-      - "443:443/udp"
-      - "3000:3000/tcp"
-    volumes:
-      - adguardhome_work:/opt/adguardhome/work
-      - adguardhome_conf:/opt/adguardhome/conf
