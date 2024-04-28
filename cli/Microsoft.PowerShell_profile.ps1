@@ -35,3 +35,5 @@ function rmf([string] $path) {
     Clear-Host
     Write-Host "Aborted`n" -ForegroundColor Red
 }
+
+function myip { curl ifconfig.io }
