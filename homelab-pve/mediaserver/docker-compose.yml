@@ -1,0 +1,126 @@
+version: '3'
+
+volumes:
+  prowlarr_config:
+  radarr_config:
+  sonarr_config:
+  qbittorrent_config:
+  bazarr_config:
+  jellyfin_cache:
+  jellyfin_config:
+
+networks:
+  default:
+  cloudflared:
+    name: cloudflared
+    external: true
+
+services:
+
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - 7878:7878
+    volumes:
+      - radarr_config:/config
+      - /data:/data
+    networks:
+      - default
+    environment:
+      - PUID=${E_PUID}
+      - PGID=${E_PGID}
+      - TZ=${E_TZ}
+    restart: unless-stopped
+
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - 8989:8989
+    volumes:
+      - sonarr_config:/config
+      - /data:/data
+    networks:
+      - default
+    environment:
+      - PUID=${E_PUID}
+      - PGID=${E_PGID}
+      - TZ=${E_TZ}
+    restart: unless-stopped
+
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    container_name: prowlarr
+    ports:
+      - 9696:9696
+    volumes:
+      - prowlarr_config:/config
+    networks:
+      - default
+    environment:
+      - PUID=${E_PUID}
+      - PGID=${E_PGID}
+      - TZ=${E_TZ}
+    restart: unless-stopped
+
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+    volumes:
+      - /data/torrent:/downloads
+      - qbittorrent_config:/config
+    networks:
+      - default
+    environment:
+      - PUID=${E_PUID}
+      - PGID=${E_PGID}
+      - TZ=${E_TZ}
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    restart: unless-stopped
+
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: bazarr
+    ports:
+      - 6767:6767
+    volumes:
+      - bazarr_config:/config
+      - /data/media:/media
+    networks:
+      - default
+    environment:
+      - PUID=${E_PUID}
+      - PGID=${E_PGID}
+      - TZ=${E_TZ}
+    restart: unless-stopped
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - 8096:8096
+    volumes:
+      - jellyfin_cache:/cache
+      - jellyfin_config:/config
+      - /data/media:/media
+    networks:
+      - default
+      - cloudflared
+    environment:
+      - PUID=${E_PUID}
+      - PGID=${E_PGID}
+      - TZ=${E_TZ}
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
